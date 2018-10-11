@@ -24,26 +24,26 @@ public class PointTimeParams extends BaseParams {
     }
 
     public String getPointDate() {
-        if (StringUtils.isNullOrEmpty(pointDate) || !pointDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        if (StringUtils.isNullOrEmpty(pointDate) || pointDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            return pointDate;
+        } else {
             System.out.println("no incorrect date, it will use current date as default.");
             return DateUtils.getCurrentDatetime()[0];
-        } else {
-            return pointDate;
         }
     }
 
     public String getPointTime() {
-        if (StringUtils.isNullOrEmpty(pointDate) || !pointTime.matches("\\d{2}:\\d{2}:\\d{2}")) {
+        if (StringUtils.isNullOrEmpty(pointDate) || pointTime.matches("\\d{2}:\\d{2}:\\d{2}")) {
+            return pointTime;
+        } else {
             System.out.println("no incorrect time, it will use 00:00:00 as default.");
             return "00:00:00";
-        } else {
-            return pointTime;
         }
     }
 
     public boolean getDirection() {
-        if (StringUtils.isNullOrEmpty(pointDate) || !direction.matches("\\d")) {
-            System.out.println("no incorrect direction, it will use 0(pre) as default.");
+        if (StringUtils.isNullOrEmpty(direction) || !direction.matches("\\d")) {
+            System.out.println("no incorrect direction, it will use 0(pre) as default. it will not take effect if datetime is empty.");
             return true;
         } else {
             return Integer.valueOf(direction) == 0;
