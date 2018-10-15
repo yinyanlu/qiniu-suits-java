@@ -1,31 +1,18 @@
 package com.qiniu.interfaces;
 
 import com.google.gson.JsonObject;
-import com.qiniu.util.JsonConvertUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import com.qiniu.common.QiniuSuitsException;
+import com.qiniu.util.JSONConvertUtils;
 
 public interface ILineParser {
 
-    void splitLine(String line);
-
-    void checkSplit() throws IOException;
-
-    ArrayList<String> getItemList() throws IOException;
-
-    ArrayList<String> getItemList(String line);
-
-    void setItemMap(ArrayList<String> itemKey) throws IOException;
-
-    void setItemMap(ArrayList<String> itemKey, String line);
+    void splitLine(String line) throws QiniuSuitsException;
 
     String toString();
 
     default String getByKey(String key) {
 
-        System.out.println(toString());
-        JsonObject lineJson = JsonConvertUtils.toJsonObject(toString());
-        return lineJson.get(key)  == null ? null : lineJson.get(key).getAsString();
+        JsonObject lineJson = JSONConvertUtils.toJson(toString());
+        return lineJson.get(key).getAsString();
     };
 }

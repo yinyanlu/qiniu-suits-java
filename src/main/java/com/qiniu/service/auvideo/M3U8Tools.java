@@ -27,7 +27,7 @@ public class M3U8Tools {
                 IOUtils.copyLarge(inputStream, fileOutputStream);
                 fileReaderAndWriterMap.writeSuccess(ts.getUrl());
             } catch (IOException e) {
-                fileReaderAndWriterMap.writeErrorOrNull(ts.getUrl() + "\t" + e.toString());
+                fileReaderAndWriterMap.writeErrorAndNull(e.toString() + "\t" + ts.getUrl());
             }
         }
 
@@ -45,8 +45,8 @@ public class M3U8Tools {
 
     public void download(List<VideoTS> tsList, final String targetFileDir) {
         File dir = new File(targetFileDir).getParentFile();
-        String url;
-        File file;
+        String url = "";
+        File file = null;
         FileOutputStream fileOutputStream = null;
         InputStream inputStream = null;
 
@@ -64,7 +64,7 @@ public class M3U8Tools {
                 IOUtils.copyLarge(inputStream, fileOutputStream);
                 fileReaderAndWriterMap.writeSuccess(ts.toString());
             } catch (IOException e) {
-                fileReaderAndWriterMap.writeErrorOrNull(ts + "\t" + e.toString());
+                fileReaderAndWriterMap.writeErrorAndNull(e.toString() + "\t" + ts);
             }
         }
 

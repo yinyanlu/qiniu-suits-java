@@ -1,7 +1,5 @@
 package com.qiniu.model;
 
-import com.qiniu.util.StringUtils;
-
 public class FileCopyParams extends BaseParams {
 
     private String aKey = "";
@@ -15,23 +13,31 @@ public class FileCopyParams extends BaseParams {
     public FileCopyParams(String[] args) throws Exception {
         super(args);
         this.pointTimeParams = new PointTimeParams(args);
+        try {
+            this.aKey = getParamFromArgs("access-key");
+            this.sKey = getParamFromArgs("secret-key");
+        } catch (Exception e) {}
         this.sourceBucket = getParamFromArgs("from");
         this.targetBucket = getParamFromArgs("to");
-        try { this.aKey = getParamFromArgs("access-key"); } catch (Exception e) {}
-        try { this.sKey = getParamFromArgs("secret-key"); } catch (Exception e) {}
-        try { this.keepKey = getParamFromArgs("keep-key"); } catch (Exception e) {}
-        try { this.targetKeyPrefix = getParamFromArgs("add-prefix"); } catch (Exception e) {}
+        this.keepKey = getParamFromArgs("keep-key");
+        try {
+            this.targetKeyPrefix = getParamFromArgs("add-prefix");
+        } catch (Exception e) {}
+        super.setSelfName("copy");
     }
 
     public FileCopyParams(String configFileName) throws Exception {
         super(configFileName);
         pointTimeParams = new PointTimeParams(configFileName);
+        try {
+            this.aKey = getParamFromConfig("access-key");
+            this.sKey = getParamFromConfig("secret-key");
+        } catch (Exception e) {}
         this.sourceBucket = getParamFromConfig("from");
         this.targetBucket = getParamFromConfig("to");
-        try { this.aKey = getParamFromConfig("access-key"); } catch (Exception e) {}
-        try { this.sKey = getParamFromConfig("secret-key"); } catch (Exception e) {}
-        try { this.keepKey = getParamFromConfig("keep-key"); } catch (Exception e) {}
-        try { this.targetKeyPrefix = getParamFromConfig("add-prefix"); } catch (Exception e) {}
+        this.keepKey = getParamFromConfig("keep-key");
+        this.targetKeyPrefix = getParamFromConfig("add-prefix");
+        super.setSelfName("copy");
     }
 
     public String getAKey() {
@@ -51,10 +57,10 @@ public class FileCopyParams extends BaseParams {
     }
 
     public boolean getKeepKey() {
-        if (StringUtils.isNullOrEmpty(keepKey) || !keepKey.matches("(true|false)")) {
+        if (keepKey.matches("(true|false)")) {
             return Boolean.valueOf(keepKey);
         } else {
-            System.out.println("no incorrect keep-key, it will use true as default.");
+            System.out.println("the keep-key is incorrect, it will use true as default.");
             return true;
         }
     }

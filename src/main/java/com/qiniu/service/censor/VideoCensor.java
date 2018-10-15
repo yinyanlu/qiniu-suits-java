@@ -1,5 +1,6 @@
 package com.qiniu.service.censor;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.qiniu.common.QiniuAuth;
@@ -28,7 +29,7 @@ public class VideoCensor {
         this.opsValueJsonArray = new JsonArray();
     }
 
-    public static VideoCensor getInstance(QiniuAuth auth) {
+    public static VideoCensor getVideoCensor(QiniuAuth auth) throws QiniuSuitsException {
         if (videoCensor == null) {
             synchronized (VideoCensor.class) {
                 if (videoCensor == null) {
@@ -105,6 +106,7 @@ public class VideoCensor {
         byte[] bodyBytes = bodyJson.toString().getBytes();
 
         String qiniuToken = "Qiniu " + this.auth.signRequestV2(url, "POST", bodyBytes, "application/json");
+        Client client = new Client();
         StringMap headers = new StringMap();
         headers.put("Authorization", qiniuToken);
         String respBody = "";
@@ -116,9 +118,6 @@ public class VideoCensor {
             qiniuSuitsException.addToFieldMap("url", url);
             qiniuSuitsException.setStackTrace(e.getStackTrace());
             throw qiniuSuitsException;
-        } finally {
-            if (response != null)
-                response.close();
         }
 
         int statusCode = response.statusCode;

@@ -16,7 +16,7 @@ public final class DateUtils {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Long breakpoint = sdf.parse(pointTime).getTime();
-        return (breakpoint > timeStamp) == isBiggerThan;
+        return (breakpoint > timeStamp) == isBiggerThan ? true : false;
     }
 
     public static boolean compareTimeToBreakpoint(String pointTime, boolean isBiggerThan, String timeString) throws ParseException, QiniuSuitsException {
@@ -26,12 +26,13 @@ public final class DateUtils {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Long breakpoint = sdf.parse(pointTime).getTime();
-        return (breakpoint > parseDateToStamp(timeString)) == isBiggerThan;
+        return (breakpoint > parseDateToStamp(timeString)) == isBiggerThan ? true : false;
     }
 
     public static Long parseDateToStamp(String greenwichMeanTime) throws ParseException {
 
-        SimpleDateFormat sd;
+        SimpleDateFormat sd = new SimpleDateFormat();
+        Long timeStamp = 0L;
 
         // yyyy-MM-dd'T'HH:mm:ssX（2018-08-09T11:38:05+08:00） 格式
         String pattern1 = "^[\\d]{4}-[\\d]{2}-[\\d]{2}T[\\d]{2}:[\\d]{2}:[\\d]{2}\\+[\\d]{2}:[\\d]{2}$";
@@ -53,7 +54,7 @@ public final class DateUtils {
                     greenwichMeanTime.length() == 20 ? "yyyy-MM-dd'T'HH:mm:ss'Z'" : "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         }
 
-        return sd.parse(greenwichMeanTime).getTime();
+        return timeStamp = sd.parse(greenwichMeanTime).getTime();
     }
 
     public static String[] getCurrentDatetime() {

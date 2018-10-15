@@ -9,6 +9,7 @@ public class BaseParams {
     private String secretKey;
     private String bucket;
     private String resultFileDir;
+    private String selfName;
     private PropertyConfig propertyConfig;
 
     protected BaseParams(String[] args) throws Exception {
@@ -41,6 +42,14 @@ public class BaseParams {
 
     public String getResultFileDir() {
         return System.getProperty("user.dir") + System.getProperty("file.separator") + resultFileDir;
+    }
+
+    protected void setSelfName(String name) {
+        this.selfName = name;
+    }
+
+    public String getSelfName() {
+        return selfName;
     }
 
     public String getParamFromArgs(String key) throws Exception {

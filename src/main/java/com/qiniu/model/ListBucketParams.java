@@ -1,102 +1,70 @@
 package com.qiniu.model;
 
-import com.qiniu.util.StringUtils;
-
 public class ListBucketParams extends BaseParams {
 
-    private String maxThreads;
+    private String threads;
     private String version;
-    private String enabledEndFile;
+    private String withParallel;
     private String level;
     private String process;
-    private String processBatch;
-    private String customPrefix;
-    private String unitLen;
 
     public ListBucketParams(String[] args) throws Exception {
         super(args);
-        try { this.maxThreads = getParamFromArgs("max-threads"); } catch (Exception e) {}
-        try { this.version = getParamFromArgs("version"); } catch (Exception e) {}
-        try { this.level = getParamFromArgs("level"); } catch (Exception e) {}
-        try { this.process = getParamFromArgs("process"); } catch (Exception e) { this.process = ""; }
-        try { this.processBatch = getParamFromArgs("process-batch"); } catch (Exception e) {}
-        try { this.customPrefix = getParamFromArgs("prefix"); } catch (Exception e) { this.customPrefix = ""; }
-        try { this.unitLen = getParamFromArgs("unit-len"); } catch (Exception e) {}
-        try { this.enabledEndFile = getParamFromArgs("end-file"); } catch (Exception e) {}
+        this.threads = getParamFromArgs("threads");
+        this.version = getParamFromArgs("v");
+        this.withParallel = getParamFromArgs("parallel");
+        this.level = getParamFromArgs("level");
+        this.process = getParamFromArgs("process");
+        super.setSelfName("list");
     }
 
     public ListBucketParams(String configFileName) throws Exception {
         super(configFileName);
-        try { this.maxThreads = getParamFromConfig("max-threads"); } catch (Exception e) {}
-        try { this.version = getParamFromConfig("version"); } catch (Exception e) {}
-        try { this.level = getParamFromConfig("level"); } catch (Exception e) {}
-        try { this.process = getParamFromConfig("process"); } catch (Exception e) { this.process = ""; }
-        try { this.processBatch = getParamFromConfig("process-batch"); } catch (Exception e) {}
-        try { this.customPrefix = getParamFromConfig("prefix"); } catch (Exception e) { this.customPrefix = ""; }
-        try { this.unitLen = getParamFromConfig("unit-len"); } catch (Exception e) {}
-        try { this.enabledEndFile = getParamFromConfig("end-file"); } catch (Exception e) {}
+        this.threads = getParamFromConfig("threads");
+        this.version = getParamFromConfig("v");
+        this.withParallel = getParamFromConfig("parallel");
+        this.level = getParamFromConfig("level");
+        this.process = getParamFromConfig("process");
+        super.setSelfName("list");
     }
 
-    public int getMaxThreads() {
-
-        if (StringUtils.isNullOrEmpty(unitLen) || !maxThreads.matches("[1-9]\\d*")) {
-            System.out.println("no incorrect threads, it will use 10 as default.");
-            return 10;
+    public int getThreads() {
+        if (threads.matches("[1-9]\\d*")) {
+            return Integer.valueOf(threads);
         } else {
-            return Integer.valueOf(maxThreads);
+            System.out.println("the threads is incorrect, it will use 10 as default.");
+            return 10;
         }
     }
 
     public int getVersion() {
-        if (StringUtils.isNullOrEmpty(unitLen) || !version.matches("[12]")) {
-            System.out.println("no incorrect version, it will use 2 as default.");
-            return 2;
-        } else {
+        if (version.matches("[12]")) {
             return Integer.valueOf(version);
+        } else {
+            System.out.println("the version is incorrect, it will use 2 as default.");
+            return 2;
+        }
+    }
+
+    public boolean getWithParallel() {
+        if (withParallel.matches("(true|false)")) {
+            return Boolean.valueOf(withParallel);
+        } else {
+            System.out.println("the parallel is incorrect, it will use true as default.");
+            return true;
         }
     }
 
     public int getLevel() {
-        if (StringUtils.isNullOrEmpty(unitLen) || !level.matches("[12]")) {
-            System.out.println("no incorrect level, it will use 1 as default.");
-            return 1;
-        } else {
+        if (level.matches("[12]")) {
             return Integer.valueOf(level);
+        } else {
+            System.out.println("the level is incorrect, it will use 1 as default.");
+            return 1;
         }
     }
 
     public String getProcess() {
         return process;
-    }
-
-    public boolean getProcessBatch() {
-        if (StringUtils.isNullOrEmpty(processBatch) || !processBatch.matches("(true|false)")) {
-            System.out.println("no incorrectly process-batch, it will use false as default.");
-            return false;
-        } else {
-            return Boolean.valueOf(processBatch);
-        }
-    }
-
-    public String getCustomPrefix() {
-        return customPrefix;
-    }
-
-    public int getUnitLen() {
-        if (StringUtils.isNullOrEmpty(unitLen) || !unitLen.matches("\\d+")) {
-            System.out.println("no incorrect unit-len, it will use 1000 as default.");
-            return 1000;
-        } else {
-            return Integer.valueOf(unitLen);
-        }
-    }
-
-    public boolean getEnabledEndFile() {
-        if (StringUtils.isNullOrEmpty(enabledEndFile) || !enabledEndFile.matches("(true|false)")) {
-            System.out.println("no incorrectly enable end-file, it will use false as default.");
-            return false;
-        } else {
-            return Boolean.valueOf(enabledEndFile);
-        }
     }
 }
