@@ -3,7 +3,7 @@ package com.qiniu.util;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qiniu.common.Constants;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 
 public class ListBucketUtils {
 

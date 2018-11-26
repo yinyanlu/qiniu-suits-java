@@ -5,7 +5,7 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.model.qoss.Qhash;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 import com.qiniu.util.JsonConvertUtils;
 import com.qiniu.util.RequestUtils;
 

@@ -1,14 +1,10 @@
 package com.qiniu.service.qoss;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.sdk.BucketManager;
-import com.qiniu.storage.model.FileInfo;
-import com.qiniu.storage.model.FileListing;
+import com.qiniu.sdk.FileInfo;
 import com.qiniu.util.*;
 
 import java.io.*;
@@ -115,28 +111,19 @@ public class FileLister implements Iterator<List<FileInfo>> {
         List<FileInfo> resultList = new ArrayList<>();
         Response response = list(prefix, delimiter, marker, limit);
         if (response != null) {
-            if (version == 1) {
-                FileListing fileListing = response.jsonToObject(FileListing.class);
-                if (fileListing != null) {
-                    FileInfo[] items = fileListing.items;
-                    this.marker = fileListing.marker;
-                    if (items.length > 0) resultList = Arrays.asList(items);
-                }
-            } else if (version == 2) {
-                InputStream inputStream = new BufferedInputStream(response.bodyStream());
-                Reader reader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(reader);
-                List<ListLine> listLines = bufferedReader.lines().parallel()
-                        .filter(line -> !StringUtils.isNullOrEmpty(line))
-                        .map(line -> new ListLine().fromLine(line))
-                        .collect(Collectors.toList());
-                resultList = listLines.parallelStream()
-                        .map(listLine -> listLine.fileInfo)
-                        .collect(Collectors.toList());
-                Optional<ListLine> lastListLine = listLines.parallelStream()
-                        .max(ListLine::compareTo);
-                this.marker = lastListLine.map(listLine -> listLine.marker).orElse(null);
-            }
+            InputStream inputStream = new BufferedInputStream(response.bodyStream());
+            Reader reader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            List<ListLine> listLines = bufferedReader.lines().parallel()
+                    .filter(line -> !StringUtils.isNullOrEmpty(line))
+                    .map(line -> new ListLine().fromLine(line))
+                    .collect(Collectors.toList());
+            resultList = listLines.parallelStream()
+                    .map(listLine -> listLine.fileInfo)
+                    .collect(Collectors.toList());
+            Optional<ListLine> lastListLine = listLines.parallelStream()
+                    .max(ListLine::compareTo);
+            this.marker = lastListLine.map(listLine -> listLine.marker).orElse(null);
             response.close();
         }
 

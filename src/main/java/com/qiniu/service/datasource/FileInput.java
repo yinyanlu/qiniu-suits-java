@@ -4,7 +4,7 @@ import com.qiniu.common.FileMap;
 import com.qiniu.service.fileline.SplitLineParser;
 import com.qiniu.service.interfaces.ILineParser;
 import com.qiniu.service.interfaces.IQossProcess;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 import com.qiniu.util.ExecutorsUtils;
 import com.qiniu.util.StringUtils;
 

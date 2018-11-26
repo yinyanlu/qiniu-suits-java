@@ -1,7 +1,7 @@
 package com.qiniu.util;
 
 import com.qiniu.common.QiniuException;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 
 public class LineUtils {
 

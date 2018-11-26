@@ -8,6 +8,7 @@ import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.model.*;
+import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.*;
 
 import java.util.*;

@@ -5,7 +5,7 @@ import com.qiniu.http.Response;
 import com.qiniu.sdk.BucketManager.*;
 import com.qiniu.service.interfaces.IQossProcess;
 import com.qiniu.storage.Configuration;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 import com.qiniu.util.Auth;
 
 import java.io.IOException;

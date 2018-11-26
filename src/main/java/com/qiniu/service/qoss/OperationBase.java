@@ -7,7 +7,7 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.service.interfaces.IQossProcess;
 import com.qiniu.storage.Configuration;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 import com.qiniu.util.Auth;
 import com.qiniu.util.HttpResponseUtils;
 import com.qiniu.util.StringUtils;

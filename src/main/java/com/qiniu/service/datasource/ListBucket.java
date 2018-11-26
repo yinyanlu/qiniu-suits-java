@@ -9,7 +9,7 @@ import com.qiniu.sdk.BucketManager;
 import com.qiniu.service.interfaces.IQossProcess;
 import com.qiniu.service.qoss.FileLister;
 import com.qiniu.storage.Configuration;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 import com.qiniu.util.*;
 
 import java.io.*;

@@ -1,7 +1,7 @@
 package com.qiniu.service.interfaces;
 
 import com.qiniu.common.QiniuException;
-import com.qiniu.storage.model.FileInfo;
+import com.qiniu.sdk.FileInfo;
 
 import java.util.List;
 
